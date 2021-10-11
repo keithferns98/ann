@@ -11,6 +11,7 @@ params:
 artifacts:
   artifacts_dir: artifacts 
   model_dir: model
+  model_name: model_ann.h5
   plots_dir: plots
   checkpoint_dir: checkpoints
 
