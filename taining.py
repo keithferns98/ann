@@ -2,12 +2,13 @@ from src.utils.common import read_config
 import argparse
 from src.utils.data_mgmt import get_data
 from src.utils.model import create_model
-from src.utils.model import save_model
+from src.utils.model import save_model,save_plot
 import os
+import pandas as pd
 
 
 def training(config_path):
-    config=read_config(config_path)
+    config = read_config(config_path)
     print(config)
     validation_size = config['params']['Validation_datasize']
 
@@ -30,6 +31,13 @@ def training(config_path):
     os.makedirs(model_dir_path, exist_ok=True)
 
     save_model(model, model_name,model_dir_path)
+
+    plot_dir=config['artifacts']['plots_dir']
+    plot_name=config['artifacts']['plot_name']
+    plot_dir_path = os.path.join(artifacts_dir, plot_dir)
+    os.makedirs(plot_dir_path, exist_ok=True)
+
+    save_plot(pd.DataFrame(history.history), plot_name, plot_dir_path)
 
 
 if __name__ == '__main__':
