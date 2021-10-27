@@ -7,14 +7,18 @@ params:
   metrics: accuracy
   optimizer: SGD
   Validation_datasize: 5000
+  patience: 5
+  restore_best_weights: True
 
 artifacts:
   artifacts_dir: artifacts 
   model_dir: model
   model_name: model_ann.h5
   plots_dir: plots
-  checkpoint_dir: checkpoints
+  
   plot_name: ann_graph
+  Checkpoint_dir: checkpoints
+  
 
 logs:
   logs_dir: logs_dir

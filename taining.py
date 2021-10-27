@@ -3,6 +3,7 @@ import argparse
 from src.utils.data_mgmt import get_data
 from src.utils.model import create_model
 from src.utils.model import save_model,save_plot
+from src.utils.callbacks import get_callbacks
 import os
 import pandas as pd
 
@@ -23,7 +24,9 @@ def training(config_path):
     EPOCHS = config['params']['epochs']
     Validation_set = (X_valid, y_valid)
 
-    history = model.fit(X_train, y_train, epochs=EPOCHS, validation_data=Validation_set)
+    CALLBACK_LIST=get_callbacks(config,X_train)
+
+    history = model.fit(X_train, y_train, epochs=EPOCHS, validation_data=Validation_set,callbacks=CALLBACK_LIST)
     model_name = config['artifacts']['model_name']
     model_dir = config['artifacts']['model_dir']
     artifacts_dir = config['artifacts']['artifacts_dir']
@@ -32,8 +35,8 @@ def training(config_path):
 
     save_model(model, model_name,model_dir_path)
 
-    plot_dir=config['artifacts']['plots_dir']
-    plot_name=config['artifacts']['plot_name']
+    plot_dir = config['artifacts']['plots_dir']
+    plot_name = config['artifacts']['plot_name']
     plot_dir_path = os.path.join(artifacts_dir, plot_dir)
     os.makedirs(plot_dir_path, exist_ok=True)
 
